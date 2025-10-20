@@ -33,8 +33,8 @@ function CustomerLogin() {
     flow: "auth-code",
     scope: "https://www.googleapis.com/auth/calendar",
     onSuccess: async (codeResponse) => {
+      setLoading(true);
       try {
-        setLoading(true);
         const tokens = await api.post(
           "https://events-platform-backend-wfoi.onrender.com/api/create-tokens",
           {
@@ -76,7 +76,12 @@ function CustomerLogin() {
               <button>View Events</button>
             </Link>
           ) : (
-            <button onClick={() => googleLogin()}>
+            <button
+              onClick={() => {
+                setLoading(true);
+                googleLogin();
+              }}
+            >
               Sign in with Google 🚀
             </button>
           )}
